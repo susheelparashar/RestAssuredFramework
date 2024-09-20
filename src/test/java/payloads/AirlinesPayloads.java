@@ -2,11 +2,16 @@ package payloads;
 
 import com.github.javafaker.Faker;
 import org.apache.commons.lang3.RandomStringUtils;
+import pojos.Airline;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static utils.RandomDataGenerator.faker;
+
 public class AirlinesPayloads {
+
+    static Faker faker = new Faker();
 
     public static String getCreateAirlinePayload() {
 
@@ -54,8 +59,6 @@ public class AirlinesPayloads {
 
     public static Map<String, Object> getCreateAirlinePayloadFromMap() {
 
-        Faker faker=new Faker();
-
         // Creating a map to hold the payload data
         Map<String, Object> payload = new HashMap<>();
         payload.put("id", faker.number().digits(10));
@@ -64,9 +67,22 @@ public class AirlinesPayloads {
         payload.put("logo", RandomStringUtils.randomAlphabetic(25));
         payload.put("slogan", RandomStringUtils.randomAlphabetic(20));
         payload.put("headQuarters", faker.address().cityName());
-        payload.put("website", "https://"+RandomStringUtils.randomAlphabetic(10)+".com");
+        payload.put("website", "https://" + RandomStringUtils.randomAlphabetic(10) + ".com");
         payload.put("established", faker.number().numberBetween(1900, 2000));
 
         return payload;
+    }
+
+    public static Airline getCreateAirlinePayloadFromPojo() {
+        return Airline.builder()
+                .id(faker.number().digits(10))
+                .name(faker.name().firstName())
+                .country(faker.address().country())
+                .logo(RandomStringUtils.randomAlphabetic(25))
+                .slogan(RandomStringUtils.randomAlphabetic(20))
+                .headQuaters(faker.address().cityName())
+                .website("https://" + RandomStringUtils.randomAlphabetic(10) + ".com")
+                .establishment(String.valueOf(faker.number().numberBetween(1900, 2000)))
+                .build();
     }
 }

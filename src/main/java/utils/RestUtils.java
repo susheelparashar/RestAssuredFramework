@@ -36,6 +36,14 @@ public class RestUtils {
         return response;
     }
 
+    public static Response performPost(String endpoint,Object requestPayloadPojo, Map<String, String> headers) {
+        RequestSpecification requestSpecification = getRequestSpecifications(endpoint, requestPayloadPojo, headers);
+        Response response = requestSpecification.post();
+        printRequestLogInReport(requestSpecification);
+        printResponseLogInReport(response);
+        return response;
+    }
+
     private static void printRequestLogInReport(RequestSpecification requestSpecification) {
         QueryableRequestSpecification queryableRequestSpecification = SpecificationQuerier.query(requestSpecification);
         ExtentReportManager.logInfoDetails("Endpoint is " + queryableRequestSpecification.getBaseUri());
